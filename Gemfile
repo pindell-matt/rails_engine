@@ -10,15 +10,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'figaro'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 group :development, :test do
-  gem 'byebug'
+  gem 'rspec-rails'
   gem 'pry'
+  gem 'pry-rails'
   gem 'capybara'
   gem 'launchy'
   gem 'mocha'
@@ -33,6 +28,5 @@ end
 group :test do
   gem 'vcr'
   gem 'webmock'
-  gem 'rspec-rails'
   gem 'simplecov', :require => false
 end
