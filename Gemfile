@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'figaro'
+gem 'factory_girl_rails'
+gem 'database_cleaner'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -17,7 +19,7 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'mocha'
-  gem 'shoulda'
+  gem 'shoulda-matchers'
 end
 
 group :development do
@@ -26,6 +28,7 @@ group :development do
 end
 
 group :test do
+  gem 'faker'
   gem 'vcr'
   gem 'webmock'
   gem 'simplecov', :require => false
