@@ -3,5 +3,5 @@ class Invoice < ActiveRecord::Base
   belongs_to :customer
   has_many   :invoice_items
 
-  # enum for status
+  validates_presence_of :status
 end
