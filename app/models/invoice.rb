@@ -1,4 +1,7 @@
 class Invoice < ActiveRecord::Base
-  has_one :merchant
-  has_one :customer
+  belongs_to :merchant
+  belongs_to :customer
+  has_many   :invoice_items
+
+  # enum for status
 end
