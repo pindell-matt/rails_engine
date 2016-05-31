@@ -28,6 +28,7 @@ group :development do
 end
 
 group :test do
+  gem 'faker'
   gem 'vcr'
   gem 'webmock'
   gem 'simplecov', :require => false
