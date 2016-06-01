@@ -9,6 +9,7 @@ class Api::V1::MerchantsController < Api::ApiController
     respond_with Merchant.find(params[:id])
   end
 
+  # kick out to separate controller (dedicated find controller?)
   def find
     respond_with Merchant.find_by(finder_params)
   end
