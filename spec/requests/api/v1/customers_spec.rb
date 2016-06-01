@@ -11,7 +11,6 @@ RSpec.describe "Customer Record Endpoint" do
     get '/api/v1/customers'
 
     results = JSON.parse(body)
-
     expect(results.count).to eq(3)
     customer_json = results.first
     expect(customer_json).to eq({
