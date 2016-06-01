@@ -44,6 +44,14 @@ RSpec.describe "Customer Record Endpoint" do
     expect(results["full_name"]).to eq([@customer.first_name, @customer.last_name].join(" "))
   end
 
+  it "can find a customer based on last_name" do
+    get "/api/v1/customers/find?last_name=#{@customer.last_name}"
+
+    results = JSON.parse(body)
+    expect(results["id"]).to        eq(@customer.id)
+    expect(results["full_name"]).to eq([@customer.first_name, @customer.last_name].join(" "))
+  end
+
   it "can find a customer based on created_at" do
     get "/api/v1/customers/find?created_at=#{@customer.created_at}"
 
@@ -62,6 +70,18 @@ RSpec.describe "Customer Record Endpoint" do
 
   it "can find all based on first_name" do
     get "/api/v1/customers/find_all?first_name=#{@customer.first_name}"
+
+    results = JSON.parse(body)
+    expect(results.count).to eq(1)
+    customer_json = results.first
+    expect(customer_json).to eq({
+      'id'         => @customer.id,
+      'full_name'  => [@customer.first_name, @customer.last_name].join(" ")
+    })
+  end
+
+  it "can find all based on last_name" do
+    get "/api/v1/customers/find_all?last_name=#{@customer.last_name}"
 
     results = JSON.parse(body)
     expect(results.count).to eq(1)

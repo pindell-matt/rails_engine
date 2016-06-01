@@ -18,6 +18,8 @@ class Api::V1::FindController < Api::ApiController
       params.symbolize_keys.extract!(
         :id,
         :name,
+        :first_name,
+        :last_name,
         :created_at,
         :updated_at
       )
