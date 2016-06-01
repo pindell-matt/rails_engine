@@ -60,4 +60,47 @@ RSpec.describe "Merchant Record Endpoint" do
     expect(results["name"]).to eq(@merchant.name)
   end
 
+  it "can find all based on name" do
+    get "/api/v1/merchants/find_all?name=#{@merchant.name}"
+
+    results = JSON.parse(body)
+    expect(results.count).to eq(1)
+    merchant_json = results.first
+    expect(merchant_json).to eq({
+      'id'   => @merchant.id,
+      'name' => @merchant.name
+    })
+  end
+
+  it "can find all based on created_at" do
+    get "/api/v1/merchants/find_all?created_at=#{@merchant.created_at}"
+
+    results = JSON.parse(body)
+    expect(results.count).to eq(3)
+    merchant_json = results.first
+    expect(merchant_json).to eq({
+      'id'   => @merchant.id,
+      'name' => @merchant.name
+    })
+  end
+
+  it "can find all based on updated_at" do
+    get "/api/v1/merchants/find_all?updated_at=#{@merchant.updated_at}"
+
+    results = JSON.parse(body)
+    expect(results.count).to eq(3)
+    merchant_json = results.first
+    expect(merchant_json).to eq({
+      'id'   => @merchant.id,
+      'name' => @merchant.name
+    })
+  end
+
+  it "can return a random merchant" do
+    get "/api/v1/merchants/random"
+
+    results = JSON.parse(body)
+    expect(results.has_key?("id"))
+    expect(results.has_key?("name"))
+  end
 end
