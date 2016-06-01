@@ -4,7 +4,7 @@ RSpec.describe "Merchant Record Endpoint" do
 
   before(:each) do
     @merchants = create_list(:merchant_with_items, 3)
-    @merchant  = @merchants[1]
+    @merchant  = @merchants.first
   end
 
   it "returns all merchants with /merchants" do
@@ -13,7 +13,7 @@ RSpec.describe "Merchant Record Endpoint" do
     results = JSON.parse(body)
 
     expect(results.count).to eq(3)
-    merchant_json = results[1]
+    merchant_json = results.first
     expect(merchant_json).to eq({
       'id'   => @merchant.id,
       'name' => @merchant.name
@@ -45,11 +45,19 @@ RSpec.describe "Merchant Record Endpoint" do
   end
 
   it "can find a merchant based on created_at" do
-    time = @merchant.created_at.to_json.gsub("\"", "")
-    get "/api/v1/merchants/find?created_at=#{time}"
+    get "/api/v1/merchants/find?created_at=#{@merchant.created_at}"
 
     results = JSON.parse(body)
     expect(results["id"]).to   eq(@merchant.id)
     expect(results["name"]).to eq(@merchant.name)
   end
+
+  it "can find a merchant based on updated_at" do
+    get "/api/v1/merchants/find?updated_at=#{@merchant.updated_at}"
+
+    results = JSON.parse(body)
+    expect(results["id"]).to   eq(@merchant.id)
+    expect(results["name"]).to eq(@merchant.name)
+  end
+
 end

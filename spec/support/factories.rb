@@ -26,7 +26,9 @@ FactoryGirl.define do
   end
 
   factory :merchant do |f|
-    f.name { Faker::Company.name }
+    f.name     { Faker::Company.name }
+    created_at "2012-03-27T14:53:59.000Z"
+    updated_at "2012-03-27T14:53:59.000Z"
 
     factory :merchant_with_items do
       transient do
