@@ -10,11 +10,11 @@ class Api::V1::MerchantsController < Api::ApiController
   end
 
   def find
-    respond_with Merchant.find_by(finder)
+    respond_with Merchant.find_by(finder_params)
   end
 
   def find_all
-    respond_with Merchant.where(finder)
+    respond_with Merchant.where(finder_params)
   end
 
   def random
@@ -22,7 +22,7 @@ class Api::V1::MerchantsController < Api::ApiController
   end
 
   private
-    def finder
+    def finder_params
       params.symbolize_keys.extract!(
         :id,
         :name,
