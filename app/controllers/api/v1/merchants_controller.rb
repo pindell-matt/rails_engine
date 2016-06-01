@@ -1,5 +1,5 @@
 class Api::V1::MerchantsController < Api::ApiController
-  respond_to :json, :xml
+  respond_to :json
 
   def index
     respond_with Merchant.all
@@ -10,9 +10,9 @@ class Api::V1::MerchantsController < Api::ApiController
   end
 
   # kick out to separate controller (dedicated find controller?)
-  def find
-    respond_with Merchant.find_by(finder_params)
-  end
+  # def find
+  #   respond_with Merchant.find_by(finder_params)
+  # end
 
   def find_all
     respond_with Merchant.where(finder_params)
