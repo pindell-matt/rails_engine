@@ -10,7 +10,16 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1, defaults: { format: :json } do
-      resources :merchants, only: [:index, :show]
+
+      resources :merchants, only: [:index, :show] do
+        scope module: 'merchants' do
+          member do
+            get '/items',    to: 'items#index'
+            get '/invoices', to: 'invoices#index'
+          end
+        end
+      end
+
       resources :customers, only: [:index, :show]
       resources :items,     only: [:index, :show]
     end
