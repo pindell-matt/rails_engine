@@ -12,6 +12,7 @@ gem 'figaro'
 gem 'factory_girl_rails'
 gem 'database_cleaner'
 gem 'responders'
+gem 'active_model_serializers', github: "rails-api/active_model_serializers"
 
 group :development, :test do
   gem 'rspec-rails'
