@@ -13,6 +13,9 @@ FactoryGirl.define do
   factory :customer do |f|
     f.first_name { Faker::Name.first_name }
     f.last_name  { Faker::Name.last_name }
+    created_at   "2012-03-27T14:53:59.000Z"
+    updated_at   "2012-03-27T14:53:59.000Z"
+
 
     factory :customer_with_invoice do
       transient do
