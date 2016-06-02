@@ -10,6 +10,8 @@ FactoryGirl.define do
 
   factory :invoice do |f|
     f.status "shipped"
+    created_at "2012-03-27T14:53:59.000Z"
+    updated_at "2012-03-27T14:53:59.000Z"
   end
 
   factory :customer do |f|
