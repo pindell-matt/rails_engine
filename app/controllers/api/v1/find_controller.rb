@@ -20,6 +20,9 @@ class Api::V1::FindController < Api::ApiController
         :name,
         :first_name,
         :last_name,
+        :unit_price,
+        :merchant_id,
+        :description,
         :created_at,
         :updated_at
       )
