@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Item Record Endpoint" do
+RSpec.describe "Invoice Record Endpoint" do
 
   before(:each) do
     @invoices = create_list(:invoice, 3)
@@ -125,7 +125,7 @@ RSpec.describe "Item Record Endpoint" do
     get "/api/v1/invoices/find_all?customer_id=#{@invoice.customer_id}"
 
     results = JSON.parse(body)
-    expect(results.count).to eq(3)
+    expect(results.count).to eq(1)
     invoice_json = results.first
     expect(invoice_json).to eq({
       'id'          => @invoice.id,

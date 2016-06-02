@@ -10,7 +10,11 @@ class Api::V1::FindController < Api::ApiController
   end
 
   def show
-    respond_with model_param.find_by(finder_params)
+    if finder_params.has_key?(:unit_price)
+      respond_with model_param.find_by(formatted_unit_price)
+    else
+      respond_with model_param.find_by(finder_params)
+    end
   end
 
   private

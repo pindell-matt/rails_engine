@@ -98,7 +98,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @items.last.id,
       'name'        => @items.last.name,
       'description' => @items.last.description,
-      'unit_price'  => @items.last.unit_price,
+      'unit_price'  => (@items.last.unit_price / 100.00).to_s,
       'merchant_id' => @items.last.merchant_id
     })
   end
