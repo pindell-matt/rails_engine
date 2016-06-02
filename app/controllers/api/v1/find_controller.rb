@@ -2,15 +2,11 @@ class Api::V1::FindController < Api::ApiController
   respond_to :json
 
   def index
-    # refactor
     if finder_params.has_key?(:unit_price)
-      respond_with model_param.where({
-        unit_price: (finder_params[:unit_price].to_f * 100).to_i
-      })
+      respond_with model_param.where(formatted_unit_price)
     else
       respond_with model_param.where(finder_params)
     end
-    
   end
 
   def show
@@ -41,5 +37,9 @@ class Api::V1::FindController < Api::ApiController
         :created_at,
         :updated_at
       )
+    end
+
+    def formatted_unit_price
+    { unit_price: (params[:unit_price].to_f * 100).to_i }
     end
 end
