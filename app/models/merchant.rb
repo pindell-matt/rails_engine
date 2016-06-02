@@ -1,6 +1,7 @@
 class Merchant < ActiveRecord::Base
   has_many :items
   has_many :invoices
+  has_many :invoice_items, through: :invoices
 
   validates_presence_of :name
 
@@ -25,6 +26,14 @@ class Merchant < ActiveRecord::Base
     joins(invoices: :invoice_items).where("invoices.created_at = ?", date)
                                    .sum("invoice_items.quantity * invoice_items.unit_price")
   }
+
+  scope :individual_revenue, -> id {
+    joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
+                                                    .where("merchants.id = ?", id)
+                                                    .sum("invoice_items.quantity * invoice_items.unit_price")
+
+  }
+
 
 
 end
