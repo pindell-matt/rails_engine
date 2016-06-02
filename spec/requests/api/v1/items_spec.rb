@@ -6,6 +6,8 @@ RSpec.describe "Item Record Endpoint" do
     merchant = create(:merchant_with_items)
     @items   = merchant.items
     @item    = @items.first
+    # refactor
+    @unit_price = (@item.unit_price / 100.00).to_s
   end
 
   it "returns all items with /items" do
@@ -18,7 +20,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -31,7 +33,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -44,7 +46,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -57,7 +59,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -70,20 +72,20 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
 
   it "can find an item based on unit_price" do
-    get "/api/v1/items/find?unit_price=#{@item.unit_price}"
+    get "/api/v1/items/find?unit_price=#{@unit_price}"
 
     results = JSON.parse(body)
     expect(results).to eq({
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -109,7 +111,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -122,7 +124,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -137,7 +139,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -152,13 +154,13 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
 
   it "can find all based on unit_price" do
-    get "/api/v1/items/find_all?unit_price=#{@item.unit_price}"
+    get "/api/v1/items/find_all?unit_price=#{@unit_price}"
 
     results = JSON.parse(body)
     expect(results.count).to eq(1)
@@ -167,7 +169,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -182,7 +184,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -197,7 +199,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end
@@ -212,7 +214,7 @@ RSpec.describe "Item Record Endpoint" do
       'id'          => @item.id,
       'name'        => @item.name,
       'description' => @item.description,
-      'unit_price'  => @item.unit_price,
+      'unit_price'  => @unit_price,
       'merchant_id' => @item.merchant_id
     })
   end

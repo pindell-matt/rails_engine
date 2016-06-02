@@ -3,11 +3,7 @@ require 'rails_helper'
 RSpec.describe "Item Record Endpoint" do
 
   before(:each) do
-    3.times do
-      create(:invoice, merchant_id: create(:merchant).id, customer_id: create(:customer).id)
-    end
-
-    @invoices = Invoice.all
+    @invoices = create_list(:invoice, 3)
     @invoice  = @invoices.first
   end
 
