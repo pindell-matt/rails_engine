@@ -22,7 +22,14 @@ class Api::V1::FindController < Api::ApiController
         :last_name,
         :unit_price,
         :merchant_id,
+        :customer_id,
+        :invoice_id,
+        :item_id,
+        :quantity,
         :description,
+        :credit_card_number,
+        :status,
+        :result,
         :created_at,
         :updated_at
       )

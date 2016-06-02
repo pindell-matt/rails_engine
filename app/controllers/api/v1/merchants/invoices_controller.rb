@@ -9,5 +9,4 @@ class Api::V1::Merchants::InvoicesController < Api::ApiController
     def merchant_params
       params.require("id")
     end
-
 end
