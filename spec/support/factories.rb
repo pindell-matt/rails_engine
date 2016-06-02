@@ -8,12 +8,6 @@ FactoryGirl.define do
     f.updated_at  "2012-03-27T14:53:59.000Z"
   end
 
-  factory :invoice do |f|
-    f.status "shipped"
-    created_at "2012-03-27T14:53:59.000Z"
-    updated_at "2012-03-27T14:53:59.000Z"
-  end
-
   factory :customer do |f|
     f.first_name { Faker::Name.first_name }
     f.last_name  { Faker::Name.last_name }
@@ -46,6 +40,14 @@ FactoryGirl.define do
         create_list(:item, evaluator.items_count, merchant: merchant)
       end
     end
+  end
+
+  factory :invoice do
+    customer
+    merchant
+    status "shipped"
+    created_at "2012-03-27T14:53:59.000Z"
+    updated_at "2012-03-27T14:53:59.000Z"
   end
 
 end
