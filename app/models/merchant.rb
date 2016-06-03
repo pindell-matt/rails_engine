@@ -38,27 +38,14 @@ class Merchant < ActiveRecord::Base
     { "revenue" => (result / 100.00).to_s }
   end
 
-  # scope :single_merchant_revenue, -> id {
-  #   joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
-  #                                                   .where("merchants.id = ?", id)
-  #                                                   .sum("invoice_items.quantity * invoice_items.unit_price")
-  #
-  # }
-
   def self.single_merchant_revenue_with_date(id, date)
     result = find(id).invoice_items.where("invoices.created_at = ?", date)
                                    .sum("invoice_items.quantity * invoice_items.unit_price")
     { "revenue" => (result / 100.00).to_s }
   end
 
-  # scope :single_merchant_revenue_with_date, -> id, date {
-  #   find(id).invoice_items.where("invoices.created_at = ?", date)
-  #                         .sum("invoice_items.quantity * invoice_items.unit_price")
-  # }
-
   scope :customers_with_pending_invoices, -> id {
     find(id).invoices.joins(:transactions).where("transactions.result = 'failed'").joins(:customer).uniq
   }
-
 
 end
