@@ -40,12 +40,49 @@ FactoryGirl.define do
         create_list(:item, evaluator.items_count, merchant: merchant)
       end
     end
+
+    factory :merchant_with_invoices do
+      transient do
+        invoices_count 3
+      end
+
+      after(:create) do |merchant, evaluator|
+        create_list(:invoice, evaluator.invoices_count, merchant: merchant)
+      end
+    end
+
+    factory :merchant_with_transactions do
+      transient do
+        invoices_count 3
+      end
+
+      after(:create) do |merchant, evaluator|
+        create_list(:invoice, evaluator.invoices_count, merchant: merchant)
+      end
+    end
   end
 
   factory :invoice do
     customer
     merchant
     status "shipped"
+    created_at "2012-03-27T14:53:59.000Z"
+    updated_at "2012-03-27T14:53:59.000Z"
+  end
+
+  factory :invoice_item do
+    invoice
+    item
+    quantity 2
+    unit_price 1500
+    created_at "2012-03-27T14:53:59.000Z"
+    updated_at "2012-03-27T14:53:59.000Z"
+  end
+
+  factory :transaction do
+    invoice
+    credit_card_number "46034567123400"
+    result "success"
     created_at "2012-03-27T14:53:59.000Z"
     updated_at "2012-03-27T14:53:59.000Z"
   end
