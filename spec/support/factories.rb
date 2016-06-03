@@ -50,4 +50,13 @@ FactoryGirl.define do
     updated_at "2012-03-27T14:53:59.000Z"
   end
 
+  factory :invoice_item do
+    invoice
+    item
+    quantity 2
+    unit_price 1500
+    created_at "2012-03-27T14:53:59.000Z"
+    updated_at "2012-03-27T14:53:59.000Z"
+  end
+
 end

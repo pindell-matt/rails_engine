@@ -3,10 +3,9 @@ require 'rails_helper'
 RSpec.describe "Item Record Endpoint" do
 
   before(:each) do
-    merchant = create(:merchant_with_items)
-    @items   = merchant.items
-    @item    = @items.first
-    # refactor
+    merchant    = create(:merchant_with_items)
+    @items      = merchant.items
+    @item       = @items.first
     @unit_price = (@item.unit_price / 100.00).to_s
   end
 
