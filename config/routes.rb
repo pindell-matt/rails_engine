@@ -10,8 +10,10 @@ Rails.application.routes.draw do
         scope module: 'merchants' do
           # collection do
           #   get '/most_revenue'
+          #   get '/most_items'
+          #   get '/revenue'
           # end
-          
+
           member do
             get '/items',    to: 'items#index'
             get '/invoices', to: 'invoices#index'

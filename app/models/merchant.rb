@@ -40,9 +40,8 @@ class Merchant < ActiveRecord::Base
   }
 
   scope :individual_revenue_by_date, -> id, date {
-    joins(invoices: :invoice_items).where("invoices.created_at = ?", date)
-                                   .where("merchants.id = ?", id)
-                                   .sum("invoice_items.quantity * invoice_items.unit_price")
+    find(id).invoice_items.where("invoices.created_at = ?", date)
+                          .sum("invoice_items.quantity * invoice_items.unit_price")
   }
 
   scope :customers_with_pending_invoices, -> id {
