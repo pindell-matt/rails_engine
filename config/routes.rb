@@ -27,8 +27,9 @@ Rails.application.routes.draw do
       resources :customers, only: [:index, :show] do
         scope module: 'customers' do
           member do
-            get '/invoices',     to: 'invoices#index'
-            get '/transactions', to: 'transactions#index'
+            get '/invoices',          to: 'invoices#index'
+            get '/transactions',      to: 'transactions#index'
+            get '/favorite_merchant', to: 'favorite_merchant#show'
           end
         end
       end
