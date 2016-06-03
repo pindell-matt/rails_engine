@@ -7,7 +7,6 @@ class Merchant < ActiveRecord::Base
 
   validates_presence_of :name
 
-  # All Merchants
   scope :most_revenue, -> quantity {
     joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
                                                     .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS total")
@@ -30,24 +29,11 @@ class Merchant < ActiveRecord::Base
     { "total_revenue" => (result / 100.00).to_s }
   end
 
-
-  # Single Merchants
-
   def self.single_merchant_revenue(id)
     result = find(id).invoices.joins(:transactions, :invoice_items).where("transactions.result = 'success'")
                                                                    .sum("invoice_items.quantity * invoice_items.unit_price")
     { "revenue" => (result / 100.00).to_s }
   end
-
-
-  # def self.single_merchant_revenue(id)
-  #   result = find(id).invoice_items
-  #                    .joins(:transactions)
-  #                    .where("transactions.result = 'success'")
-  #                    .sum("invoice_items.quantity * invoice_items.unit_price")
-  #
-  #   { "revenue" => (result / 100.00).to_s }
-  # end
 
   def self.single_merchant_revenue_with_date(id, date)
     result = find(id).invoice_items.where("invoices.created_at = ?", date)

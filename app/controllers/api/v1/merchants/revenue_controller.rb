@@ -11,8 +11,6 @@ class Api::V1::Merchants::RevenueController < Api::ApiController
     elsif params['date']
       respond_with Merchant.revenue_by_date(params['date'])
     else
-      # require "pry"
-      # binding.pry
       respond_with Merchant.single_merchant_revenue(params['id'])
     end
   end
