@@ -8,11 +8,10 @@ Rails.application.routes.draw do
 
       resources :merchants, only: [:index, :show] do
         scope module: 'merchants' do
-          # collection do
-          #   get '/most_revenue'
-          #   get '/most_items'
-          #   get '/revenue'
-          # end
+          collection do
+            get '/most_revenue', to: 'revenue#index'
+            get '/revenue',      to: 'revenue#show'
+          end
 
           member do
             get '/items',    to: 'items#index'

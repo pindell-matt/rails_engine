@@ -15,9 +15,9 @@ class Merchant < ActiveRecord::Base
                                                     .take(quantity)
   }
 
-  scope :most_rev, -> quantity {
-    joins(:invoice_items).group(:id).order('sum(invoice_items.quantity*invoice_items.unit_price) DESC').take(quantity)
-  }
+  # scope :most_rev, -> quantity {
+  #   joins(:invoice_items).group(:id).order('sum(invoice_items.quantity*invoice_items.unit_price) DESC').take(quantity)
+  # }
 
   scope :most_items, -> quantity {
     joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
@@ -25,11 +25,6 @@ class Merchant < ActiveRecord::Base
                                                     .group("id")
                                                     .order("total DESC")
                                                     .take(quantity)
-  }
-
-  scope :revenue, -> date {
-    joins(invoices: :invoice_items).where("invoices.created_at = ?", date)
-                                   .sum("invoice_items.quantity * invoice_items.unit_price")
   }
 
   scope :individual_revenue, -> id {
@@ -47,5 +42,11 @@ class Merchant < ActiveRecord::Base
   scope :customers_with_pending_invoices, -> id {
     find(id).invoices.merge(Transaction.failed).uniq
   }
+
+  def self.revenue(date)
+    result = joins(invoices: :invoice_items).where("invoices.created_at = ?", date)
+                                            .sum("invoice_items.quantity * invoice_items.unit_price")
+    { "total_revenue" => (result / 100.00).to_s }
+  end
 
 end
