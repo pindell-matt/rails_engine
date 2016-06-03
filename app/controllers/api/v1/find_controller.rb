@@ -44,6 +44,6 @@ class Api::V1::FindController < Api::ApiController
     end
 
     def formatted_unit_price
-    { unit_price: (params[:unit_price].to_f * 100).to_i }
+      { unit_price: (params[:unit_price].to_f * 100).round(0) }
     end
 end

@@ -6,6 +6,13 @@ class Api::V1::Merchants::RevenueController < Api::ApiController
   end
 
   def show
-    respond_with Merchant.revenue(params['date'])
+    if !(params['id'] && params['date']).nil?
+      respond_with Merchant.single_merchant_revenue_with_date(params['id'], params['date'])
+    elsif params['date']
+      respond_with Merchant.revenue_by_date(params['date'])
+    else
+      respond_with Merchant.single_merchant_revenue(params['id'])
+    end
   end
+
 end
