@@ -2,4 +2,8 @@
 
 Before running tests
 
-* Import all CSV files with `rake import:all`
+* Import all CSV files with
+
+```
+rake import:all
+```
