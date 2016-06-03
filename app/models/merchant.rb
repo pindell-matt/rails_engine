@@ -48,4 +48,14 @@ class Merchant < ActiveRecord::Base
     find(id).invoices.joins(:transactions).where("transactions.result = 'failed'").joins(:customer).uniq
   }
 
+  scope :favorite_customer, -> id {
+    find(id).customers
+            .joins(:transactions)
+            .where("transactions.result = 'success'")
+            .select("customers.*, COUNT(invoices.merchant_id) AS results")
+            .group("id")
+            .order("results DESC")
+            .first
+  }
+
 end
