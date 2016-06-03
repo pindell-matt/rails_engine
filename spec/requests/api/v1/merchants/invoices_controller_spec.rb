@@ -12,7 +12,7 @@ RSpec.describe "Merchants::InvoicesController" do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns http success" do
+    it "returns invoices belonging to merchant" do
       get "/api/v1/merchants/#{@merchant.id}/invoices"
 
       results = JSON.parse(body)
