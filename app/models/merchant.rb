@@ -32,11 +32,22 @@ class Merchant < ActiveRecord::Base
 
 
   # Single Merchants
+
   def self.single_merchant_revenue(id)
-    result = find(id).joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
-                                                                      .sum("invoice_items.quantity * invoice_items.unit_price")
+    result = find(id).invoices.joins(:transactions, :invoice_items).where("transactions.result = 'success'")
+                                                                   .sum("invoice_items.quantity * invoice_items.unit_price")
     { "revenue" => (result / 100.00).to_s }
   end
+
+
+  # def self.single_merchant_revenue(id)
+  #   result = find(id).invoice_items
+  #                    .joins(:transactions)
+  #                    .where("transactions.result = 'success'")
+  #                    .sum("invoice_items.quantity * invoice_items.unit_price")
+  #
+  #   { "revenue" => (result / 100.00).to_s }
+  # end
 
   def self.single_merchant_revenue_with_date(id, date)
     result = find(id).invoice_items.where("invoices.created_at = ?", date)
