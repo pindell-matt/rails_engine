@@ -15,6 +15,10 @@ class Merchant < ActiveRecord::Base
                                                     .take(quantity)
   }
 
+  scope :most_rev, -> quantity {
+    joins(:invoice_items).group(:id).order('sum(invoice_items.quantity*invoice_items.unit_price) DESC').take(quantity)
+  }
+
   scope :most_items, -> quantity {
     joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
                                                     .select("merchants.*, SUM(invoice_items.quantity) AS total")
@@ -42,7 +46,7 @@ class Merchant < ActiveRecord::Base
   }
 
   scope :customers_with_pending_invoices, -> id {
-    find(id).customers.merge(Invoice.pending)
+    find(id).invoices.merge(Transaction.failed).uniq
   }
 
 end
