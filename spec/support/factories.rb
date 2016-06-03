@@ -4,10 +4,8 @@ FactoryGirl.define do
     f.name        { Faker::Commerce.product_name }
     f.description { Faker::Hipster.sentence }
     f.unit_price  { Faker::Commerce.price * 100 }
-  end
-
-  factory :invoice do |f|
-    f.status "shipped"
+    f.created_at  "2012-03-27T14:53:59.000Z"
+    f.updated_at  "2012-03-27T14:53:59.000Z"
   end
 
   factory :customer do |f|
@@ -42,6 +40,14 @@ FactoryGirl.define do
         create_list(:item, evaluator.items_count, merchant: merchant)
       end
     end
+  end
+
+  factory :invoice do
+    customer
+    merchant
+    status "shipped"
+    created_at "2012-03-27T14:53:59.000Z"
+    updated_at "2012-03-27T14:53:59.000Z"
   end
 
 end

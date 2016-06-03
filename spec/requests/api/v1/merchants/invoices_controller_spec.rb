@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe "Merchants::ItemsController" do
+RSpec.describe "Merchants::InvoicesController" do
 
-  describe "GET items#index" do
+  describe "GET invoices#index" do
     it "returns http success" do
       merchant = create(:merchant_with_items)
-      get "/api/v1/merchants/#{merchant.id}/items"
+      get "/api/v1/merchants/#{merchant.id}/invoices"
       expect(response).to have_http_status(:success)
     end
   end
