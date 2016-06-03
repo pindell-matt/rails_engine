@@ -15,9 +15,10 @@ Rails.application.routes.draw do
           end
 
           member do
-            get '/revenue',  to: 'revenue#show'
-            get '/items',    to: 'items#index'
-            get '/invoices', to: 'invoices#index'
+            get '/revenue',                         to: 'revenue#show'
+            get '/items',                           to: 'items#index'
+            get '/invoices',                        to: 'invoices#index'
+            get '/favorite_customer',               to: 'favorite_customer#show'
             get '/customers_with_pending_invoices', to: 'pending_invoices#index'
           end
         end
