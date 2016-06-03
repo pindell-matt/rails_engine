@@ -3,6 +3,7 @@ class Merchant < ActiveRecord::Base
   has_many :invoices
   has_many :invoice_items, through: :invoices
   has_many :customers,     through: :invoices
+  has_many :transactions,  through: :customers
 
   validates_presence_of :name
 
@@ -39,8 +40,9 @@ class Merchant < ActiveRecord::Base
                           .sum("invoice_items.quantity * invoice_items.unit_price")
   }
 
+  # merge(Transaction.failed)
   scope :customers_with_pending_invoices, -> id {
-    find(id).invoices.merge(Transaction.failed).uniq
+    find(id).invoices.joins(:transactions).where("transactions.result = 'failed'").uniq.count
   }
 
   def self.revenue(date)
