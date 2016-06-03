@@ -2,9 +2,11 @@ class Merchant < ActiveRecord::Base
   has_many :items
   has_many :invoices
   has_many :invoice_items, through: :invoices
+  has_many :customers,     through: :invoices
 
   validates_presence_of :name
 
+  # transactions: { result: 'success' }
   scope :most_revenue, -> quantity {
     joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
                                                     .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS total")
@@ -12,7 +14,6 @@ class Merchant < ActiveRecord::Base
                                                     .order("total DESC")
                                                     .take(quantity)
   }
-
 
   scope :most_items, -> quantity {
     joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'")
@@ -40,6 +41,8 @@ class Merchant < ActiveRecord::Base
                                    .sum("invoice_items.quantity * invoice_items.unit_price")
   }
 
-
+  scope :customers_with_pending_invoices, -> id {
+    find(id).customers.merge(Invoice.pending)
+  }
 
 end
