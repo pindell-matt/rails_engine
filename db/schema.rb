@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20160531215629) do
   create_table "invoices", force: :cascade do |t|
     t.integer  "customer_id"
     t.integer  "merchant_id"
-    t.citext   "status"
+    t.string   "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20160531215629) do
   add_index "invoices", ["merchant_id"], name: "index_invoices_on_merchant_id", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.citext   "name"
+    t.string   "name"
     t.string   "description"
     t.integer  "unit_price"
     t.integer  "merchant_id"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20160531215629) do
   add_index "items", ["merchant_id"], name: "index_items_on_merchant_id", using: :btree
 
   create_table "merchants", force: :cascade do |t|
-    t.citext   "name"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
