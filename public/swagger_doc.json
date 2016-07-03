@@ -1,0 +1,2157 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Rails Engine API",
+        "description": "A Turing School Classic",
+        "version": "1.0.0"
+    },
+    "host": "107.170.115.169",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/api/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/merchants": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the display name and id of all merchants.\n",
+                "tags": [
+                    "Merchants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of merchants",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/{id}": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the specific merchant associated with the id.\n",
+                "tags": [
+                    "Merchants"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "unique merchant id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single merchant",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/{id}/items": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns all items associated with that merchant.\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Merchant id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all items associated with the merchant_id",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/{id}/invoices": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns an array of all invoices associated with that merchant\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Merchant id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Invoices associated with that merchant from their known orders.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/{id}/revenue": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the total revenue for that merchant across all transactions\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Merchant id.",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "specific invoice date.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The total revenue for that merchant.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Revenue"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/{id}/favorite_customer": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the customer who has conducted the most total number of successful transactions.\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Merchant id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The favorite customer for that merchant.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/{id}/customers_with_pending_invoices": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns an array of customers that have pending (unpaid) invoices.\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Merchant id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The customers with unpaid invoices for that merchant.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/most_revenue": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the top x merchants ranked by total revenue.\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "The number of merchants to be returned.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of merchants sorted by total revenue.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/most_items": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the top x merchants ranked by total items sold.\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "The number of merchants to be returned.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of merchants sorted by total items sold.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/revenue": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the total revenue for all merchants on date x.\n",
+                "tags": [
+                    "Merchants",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "The total revenue.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The total revenue collected on that date.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Revenue"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/find": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns the matching merchant based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Merchants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The matching merchant",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/find_all": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns all matching merchants based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Merchants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all matching merchants",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/merchants/random": {
+            "get": {
+                "summary": "Merchant Types",
+                "description": "Returns a random merchant.\n",
+                "tags": [
+                    "Merchants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A random merchant.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns the display name and id of all invoices.\n",
+                "tags": [
+                    "Invoices"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of invoices",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns the specific invoice associated with the id.\n",
+                "tags": [
+                    "Invoices"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "unique invoice id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single invoice",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}/transactions": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns all transactions associated with that invoice.\n",
+                "tags": [
+                    "Invoices",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Invoice id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all transactions associated with that invoice",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}/invoice_items": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns an array of all invoice_items associated with that invoice\n",
+                "tags": [
+                    "Invoices",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "primary key.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of invoice_items associated with that invoice from their known orders",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InvoiceItem"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}/items": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns an array of all items associated with that invoice\n",
+                "tags": [
+                    "Invoices",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "primary key.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of items associated with that invoice from their known orders",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}/customer": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns the associated customer.\n",
+                "tags": [
+                    "Invoices",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "primary key.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The customer associated with that invoice",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}/merchant": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns the associated merchant.\n",
+                "tags": [
+                    "Invoices",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "primary key.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The merchant associated with that invoice",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/find": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns the matching invoice based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Invoices"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The matching invoice",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/find_all": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns all matching invoices based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Invoices"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all matching invoices",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/random": {
+            "get": {
+                "summary": "Invoice Types",
+                "description": "Returns a random invoice.\n",
+                "tags": [
+                    "Invoices"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A random invoice.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoice_items": {
+            "get": {
+                "summary": "InvoiceItem Types",
+                "description": "Returns the display name and id of all invoice_items.\n",
+                "tags": [
+                    "InvoiceItems"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of invoice_items",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InvoiceItem"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoice_items/{id}": {
+            "get": {
+                "summary": "InvoiceItem Types",
+                "description": "Returns the specific invoice_item associated with the id.\n",
+                "tags": [
+                    "InvoiceItems"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "unique invoice_item id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single invoice_item",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/InvoiceItem"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoice_items/{id}/item": {
+            "get": {
+                "summary": "InvoiceItem Types",
+                "description": "Returns the item associated with that invoice.\n",
+                "tags": [
+                    "InvoiceItems",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique InvoiceItem id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The item associated with that invoice item.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoice_items/{id}/invoice": {
+            "get": {
+                "summary": "InvoiceItem Types",
+                "description": "Returns the invoice associated with that invoice item.\n",
+                "tags": [
+                    "InvoiceItems",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique InvoiceItem id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Invoices associated with that invoice_item from their known orders.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoice_items/find": {
+            "get": {
+                "summary": "InvoiceItem Types",
+                "description": "Returns the matching invoice_item based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "InvoiceItems"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The matching invoice_item",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InvoiceItem"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoice_items/find_all": {
+            "get": {
+                "summary": "InvoiceItem Types",
+                "description": "Returns all matching invoice_items based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "InvoiceItems"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all matching invoice_items",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InvoiceItem"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoice_items/random": {
+            "get": {
+                "summary": "InvoiceItem Types",
+                "description": "Returns a random invoice_item.\n",
+                "tags": [
+                    "InvoiceItems"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A random invoice_item.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/InvoiceItem"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/items": {
+            "get": {
+                "summary": "Item Types",
+                "description": "Returns the display name and id of all items.\n",
+                "tags": [
+                    "Items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of items",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/{id}": {
+            "get": {
+                "summary": "Item Types",
+                "description": "Returns the specific item associated with the id.\n",
+                "tags": [
+                    "Items"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "unique item id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single item",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/{id}/invoice_items": {
+            "get": {
+                "summary": "Item Types",
+                "description": "Returns an array of all invoice items associated with that item.\n",
+                "tags": [
+                    "Items",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Item id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The item associated with that invoice item.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/{id}/merchant": {
+            "get": {
+                "summary": "Item Types",
+                "description": "Returns the merchant associated with that item.\n",
+                "tags": [
+                    "Items",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Item id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Invoices associated with that item from their known orders.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Merchant"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/find": {
+            "get": {
+                "summary": "Item Types",
+                "description": "Returns the matching item based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The matching item",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/find_all": {
+            "get": {
+                "summary": "Item Types",
+                "description": "Returns all matching items based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all matching items",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/items/random": {
+            "get": {
+                "summary": "Item Types",
+                "description": "Returns a random item.\n",
+                "tags": [
+                    "Items"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A random item.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Item"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions": {
+            "get": {
+                "summary": "Transaction Types",
+                "description": "Returns the display name and id of all transactions.\n",
+                "tags": [
+                    "Transactions"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of transactions",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{id}": {
+            "get": {
+                "summary": "Transaction Types",
+                "description": "Returns the specific transaction associated with the id.\n",
+                "tags": [
+                    "Transactions"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "unique transaction id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single transaction",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{id}/invoice": {
+            "get": {
+                "summary": "Transaction Types",
+                "description": "Returns the invoice associated with that transaction.\n",
+                "tags": [
+                    "Transactions",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Transaction id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Invoices associated with that transaction from their known orders.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/find": {
+            "get": {
+                "summary": "Transaction Types",
+                "description": "Returns the matching transaction based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Transactions"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The matching transaction",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/find_all": {
+            "get": {
+                "summary": "Transaction Types",
+                "description": "Returns all matching transactions based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Transactions"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all matching transactions",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/random": {
+            "get": {
+                "summary": "Transaction Types",
+                "description": "Returns a random transaction.\n",
+                "tags": [
+                    "Transactions"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A random transaction.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers": {
+            "get": {
+                "summary": "Customer Types",
+                "description": "Returns the display name and id of all customers.\n",
+                "tags": [
+                    "Customers"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of customers",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/{id}": {
+            "get": {
+                "summary": "Customer Types",
+                "description": "Returns the specific customer associated with the id.\n",
+                "tags": [
+                    "Customers"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "unique customer id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single customer",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/{id}/transactions": {
+            "get": {
+                "summary": "Customer Types",
+                "description": "Returns all transactions associated with that customer.\n",
+                "tags": [
+                    "Customers",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Customer id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all transactions associated with the customer_id",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/{id}/invoices": {
+            "get": {
+                "summary": "Customer Types",
+                "description": "Returns an array of all invoices associated with that customer\n",
+                "tags": [
+                    "Customers",
+                    "Business Logic"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Customer id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Invoices associated with that customer from their known orders.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Invoice"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/find": {
+            "get": {
+                "summary": "Customer Types",
+                "description": "Returns the matching customer based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Customers"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The matching customer",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/find_all": {
+            "get": {
+                "summary": "Customer Types",
+                "description": "Returns all matching customers based on the given query.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "primary key.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name attribute.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "created_at",
+                        "in": "query",
+                        "description": "created_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "updated_at",
+                        "in": "query",
+                        "description": "updated_at timestamp.",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "tags": [
+                    "Customers"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of all matching customers",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/random": {
+            "get": {
+                "summary": "Customer Types",
+                "description": "Returns a random customer.\n",
+                "tags": [
+                    "Customers"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A random customer.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Customer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Merchant": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifier representing a specific Merchant."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Full name for Merchant."
+                }
+            }
+        },
+        "Invoice": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifier representing a specific Merchant."
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Status of invoice."
+                },
+                "customer_id": {
+                    "type": "string",
+                    "description": "Id for the associated Customer."
+                },
+                "merchant_id": {
+                    "type": "integer",
+                    "description": "Id for the associated Merchant."
+                }
+            }
+        },
+        "InvoiceItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifier representing a specific Merchant."
+                },
+                "credit_card_number": {
+                    "type": "string",
+                    "description": "CC used for transaction."
+                },
+                "invoice_id": {
+                    "type": "string",
+                    "description": "Invoice_id for the associated Customer."
+                },
+                "result": {
+                    "type": "integer",
+                    "description": "Id for the associated Merchant."
+                }
+            }
+        },
+        "Transaction": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifier representing a specific Merchant."
+                },
+                "credit_card_number": {
+                    "type": "string",
+                    "description": "CC used for transaction."
+                },
+                "invoice_id": {
+                    "type": "string",
+                    "description": "Invoice_id for the associated Customer."
+                },
+                "result": {
+                    "type": "integer",
+                    "description": "Id for the associated Merchant."
+                }
+            }
+        },
+        "Item": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifier representing a specific Merchant."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Full name for Item."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the Item."
+                },
+                "merchant_id": {
+                    "type": "integer",
+                    "description": "Id for the associated Merchant."
+                },
+                "unit_price": {
+                    "type": "string",
+                    "description": "Unit price for the item in $XXX.XX format."
+                }
+            }
+        },
+        "Revenue": {
+            "type": "object",
+            "properties": {
+                "revenue": {
+                    "type": "string",
+                    "description": "Total revenue."
+                }
+            }
+        },
+        "Customer": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifier representing a specific Customer."
+                },
+                "first_name": {
+                    "type": "string",
+                    "description": "First name for Customer."
+                },
+                "last_name": {
+                    "type": "string",
+                    "description": "Last name for Item."
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount GrapeSwaggerRails::Engine => '/swagger'
+
   namespace :api do
     namespace :v1, defaults: { format: :json } do
 

@@ -1,0 +1,176 @@
+<h1>Rails Engine <small>created by Matt Pindell for the Turing School of Software and Design Module 3</small></h1>
+<p>For this project, I used Rails and ActiveRecord to build a JSON API which exposes data schema from <a href="https://github.com/turingschool/curriculum/blob/master/source/projects/black_thursday.markdown">Black Thursday</a>, a previous Turing project.</p>
+<h3>Record Endpoints</h3>
+<h4>Index of Record</h4>
+<p>Each data category includes an <code>index</code> action which
+renders a JSON representation of all the appropriate records:</p>
+<h5>Request URL</h5>
+<p><code>GET /api/v1/merchants.json</code></p>
+<h5>JSON Output</h5>
+<p>(The following is an example of a response if only three records were saved in the database)</p>
+<pre><code class="language-json">[
+  {
+    &quot;id&quot;:1,
+    &quot;name&quot;:&quot;Schroeder-Jerde&quot;
+  },
+  {
+    &quot;id&quot;:2,
+    &quot;name&quot;:&quot;Klein, Rempel and Jones&quot;
+  },
+  {
+    &quot;id&quot;:3,
+    &quot;name&quot;:&quot;Willms and Sons&quot;
+  }
+]
+</code></pre>
+<h4>Show Record</h4>
+<p>Each data category also includes a <code>show</code> action which
+renders a JSON representation of the appropriate record:</p>
+<h5>Request URL</h5>
+<p><code>GET /api/v1/merchants/1.json</code></p>
+<h5>JSON Output</h5>
+<pre><code class="language-json">{
+  &quot;id&quot;:1,
+  &quot;name&quot;:&quot;Schroeder-Jerde&quot;
+}
+</code></pre>
+<h4>Single Finders</h4>
+<p>Each data category can be seached with the <code>find</code> action, the result of which is a single object representation.</p>
+<h5>Request URL</h5>
+<pre><code>GET /api/v1/merchants/find?parameters
+</code></pre>
+<h5>Request Parameters</h5>
+<table border="1" style="width:50%">
+  <tr>
+    <th>parameter</th>
+    <th>description</th>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>search based on the primary key</td>
+  </tr>
+  <tr>
+    <td>namespace</td>
+    <td>search based on the name attribute</td>
+  </tr>
+  <tr>
+    <td>created_at</td>
+    <td>search based on created_at timestamp</td>
+  </tr>
+  <tr>
+    <td>updated_at</td>
+    <td>search based on updated_at timestamp</td>
+  </tr>
+</table>
+<h5>JSON Output</h5>
+<p><code>GET /api/v1/merchants/find?name=Schroeder-Jerde</code></p>
+<pre><code class="language-json">{
+   &quot;id&quot;:1,
+   &quot;name&quot;:&quot;Schroeder-Jerde&quot;
+}
+</code></pre>
+<h4>Multi-Finders</h4>
+<p>Each category also offers <code>find_all</code> finders which return all matches for the given query.</p>
+<h5>Request URL</h5>
+<p><code>GET /api/v1/merchants/find_all?parameters</code></p>
+<h5>Request Parameters</h5>
+<table border="1" style="width:50%">
+  <tr>
+    <th>parameter</th>
+    <th>description</th>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>search based on the primary key</td>
+  </tr>
+  <tr>
+    <td>namespace</td>
+    <td>search based on the name attribute</td>
+  </tr>
+  <tr>
+    <td>created_at</td>
+    <td>search based on created_at timestamp</td>
+  </tr>
+  <tr>
+    <td>updated_at</td>
+    <td>search based on updated_at timestamp</td>
+  </tr>
+</table>
+<h5>JSON Output</h5>
+<p><code>GET /api/v1/merchants/find_all?name=Cummings-Thiel</code></p>
+<pre><code class="language-json">[
+   {
+      &quot;id&quot;:4,
+      &quot;name&quot;:&quot;Cummings-Thiel&quot;
+   }
+]
+</code></pre>
+<p>Note: Although this search returns one record, it comes back in an array.</p>
+<h4>Random</h4>
+<h5>Request URL</h5>
+<p>Returns a random resource.</p>
+<p><code>api/v1/merchants/random.json</code></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 50,
+  &quot;name&quot;: &quot;Nader-Hyatt&quot;
+}
+</code></pre>
+<h3>Relationship Endpoints</h3>
+<p>In addition to making direct queries against single resources, a user can also pull relationship data from the API.</p>
+<h4>Merchants</h4>
+<ul>
+<li><code>GET /api/v1/merchants/:id/items</code> returns a collection of items associated with that merchant</li>
+<li><code>GET /api/v1/merchants/:id/invoices</code> returns a collection of invoices associated with that merchant from their known orders</li>
+</ul>
+<h4>Invoices</h4>
+<ul>
+<li><code>GET /api/v1/invoices/:id/transactions</code> returns a collection of associated transactions</li>
+<li><code>GET /api/v1/invoices/:id/invoice_items</code> returns a collection of associated invoice items</li>
+<li><code>GET /api/v1/invoices/:id/items</code> returns a collection of associated items</li>
+<li><code>GET /api/v1/invoices/:id/customer</code> returns the associated customer</li>
+<li><code>GET /api/v1/invoices/:id/merchant</code> returns the associated merchant</li>
+</ul>
+<h4>Invoice Items</h4>
+<ul>
+<li><code>GET /api/v1/invoice_items/:id/invoice</code> returns the associated invoice</li>
+<li><code>GET /api/v1/invoice_items/:id/item</code> returns the associated item</li>
+</ul>
+<h4>Items</h4>
+<ul>
+<li><code>GET /api/v1/items/:id/invoice_items</code> returns a collection of associated invoice items</li>
+<li><code>GET /api/v1/items/:id/merchant</code> returns the associated merchant</li>
+</ul>
+<h4>Transactions</h4>
+<ul>
+<li><code>GET /api/v1/transactions/:id/invoice</code> returns the associated invoice</li>
+</ul>
+<h4>Customers</h4>
+<ul>
+<li><code>GET /api/v1/customers/:id/invoices</code> returns a collection of associated invoices</li>
+<li><code>GET /api/v1/customers/:id/transactions</code> returns a collection of associated transactions</li>
+</ul>
+<h3>Business Intelligence Endpoints</h3>
+<p>The Business Intelligence of the origial project has been preserved, but now the logic is handled via ActiveRecord queries.</p>
+<h4>All Merchants</h4>
+<ul>
+<li><code>GET /api/v1/merchants/most_revenue?quantity=x</code> returns the top <code>x</code> merchants ranked by total revenue</li>
+<li><code>GET /api/v1/merchants/most_items?quantity=x</code> returns the top <code>x</code> merchants ranked by total number of items sold</li>
+<li><code>GET /api/v1/merchants/revenue?date=x</code> returns the total revenue for date <code>x</code> across all merchants</li>
+</ul>
+<h4>Single Merchant</h4>
+<ul>
+<li><code>GET /api/v1/merchants/:id/revenue</code> returns the total revenue for that merchant across all transactions</li>
+<li><code>GET /api/v1/merchants/:id/revenue?date=x</code> returns the total revenue for that merchant for a specific invoice date <code>x</code></li>
+<li><code>GET /api/v1/merchants/:id/favorite_customer</code> returns the customer who has conducted the most total number of successful transactions.</li>
+<li><code>GET /api/v1/merchants/:id/customers_with_pending_invoices</code> returns a collection of customers which have pending (unpaid) invoices</li>
+</ul>
+<h4>Items</h4>
+<ul>
+<li><code>GET /api/v1/items/most_revenue?quantity=x</code> returns the top <code>x</code> items ranked by total revenue generated</li>
+<li><code>GET /api/v1/items/most_items?quantity=x</code> returns the top <code>x</code> item instances ranked by total number sold</li>
+<li><code>GET /api/v1/items/:id/best_day</code> returns the date with the most sales for the given item using the invoice date. If there are multiple days with equal number of sales, return the most recent day.</li>
+</ul>
+<h4>Customers</h4>
+<ul>
+<li><code>GET /api/v1/customers/:id/favorite_merchant</code> returns a merchant where the customer has conducted the most successful transactions</li>
+</ul>
