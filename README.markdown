@@ -1,4 +1,4 @@
-__[Check out the live version on Digital Ocean](http://107.170.115.169/)__
+__[Check out the live version on Digital Ocean](http://rails-engine.site/)__
 
 ## Before running tests
 
